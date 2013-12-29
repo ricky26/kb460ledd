@@ -1,8 +1,10 @@
 env = Environment()
 
-prefix = Dir(ARGUMENTS.get('PREFIX', ''))
+prefix = Dir(ARGUMENTS.get('PREFIX', '/'))
 
-kb460ledd = env.program('kb460ledd', 'kb460ledd.c', LIBS=['X11'])
-env.Install(prefix+'usr/bin', kb460ledd)
+env.Append(CXXFLAGS='-std=gnu++0x')
 
-env.Alias('install', prefix + 'usr')
+kb460ledd = env.Program('kb460ledd', 'kb460ledd.cpp', LIBS=['X11'])
+env.Install(prefix.Dir('usr/bin'), kb460ledd)
+
+env.Alias('install', prefix.Dir('usr'))
